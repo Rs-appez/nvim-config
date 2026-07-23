@@ -1,0 +1,8 @@
+require("appez.config.lazy")
+require("appez.config.keymaps")
+require("appez.config.options")
+require("appez.config.filetypes")
+require("appez.utils.mapping_lang")
+require("appez.utils.gen_commit_msg")
+-- require("appez.add_providers.add_mamouth")
+-- require("appez.add_providers.add_local")
