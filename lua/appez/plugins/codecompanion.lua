@@ -80,7 +80,7 @@ return {
 		},
 	},
 	keys = {
-		{ "<C-a>", ":CodeCompanionActions<CR>", desc = "Open the action palette", mode = { "n", "x" } },
+		-- { "<C-a>", ":CodeCompanionActions<CR>", desc = "Open the action palette", mode = { "n", "x" } },
 		{ "<Leader>a", ":CodeCompanionChat Toggle<CR>", desc = "Toggle a chat buffer", mode = { "n", "x" } },
 		{ "ga", ":CodeCompanionChat Add<CR>", desc = "Add code to a chat buffer", mode = "v" },
 	},
