@@ -25,8 +25,8 @@ return {
 	opts = {
 		interactions = {
 			chat = {
-				adapter = "ollama" and is_ollama_running() or "copilot",
-				model = get_default_model() and is_ollama_running() or "gpt-5-mini",
+				adapter = is_ollama_running() and "ollama" or "copilot",
+				model = is_ollama_running() and get_default_model() or "gpt-5-mini",
 			},
 			inline = {
 				keymaps = {
