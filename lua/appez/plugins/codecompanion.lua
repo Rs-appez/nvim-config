@@ -9,6 +9,13 @@ local function get_default_model()
 	end
 end
 
+local function is_ollama_running()
+	local handle = io.popen("curl -s http://localhost:11434/api/tags > /dev/null 2>&1 && echo 1 || echo 0")
+	local result = handle:read("*a"):gsub("\n", "")
+	handle:close()
+	return result == "1"
+end
+
 return {
 	"olimorris/codecompanion.nvim",
 	dependencies = {
@@ -18,8 +25,8 @@ return {
 	opts = {
 		interactions = {
 			chat = {
-				adapter = "ollama",
-				model = get_default_model(),
+				adapter = "ollama" and is_ollama_running() or "copilot",
+				model = get_default_model() and is_ollama_running() or "gpt-5-mini",
 			},
 			inline = {
 				keymaps = {
