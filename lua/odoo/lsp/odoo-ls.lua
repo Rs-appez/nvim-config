@@ -16,7 +16,13 @@ if not configs.odoo_ls then
 			cmd = { server_path },
 			filetypes = { "python", "javascript", "xml" },
 			root_dir = lspconfig.util.root_pattern("odools.toml"),
-			settings = {},
+			settings = {
+				python = {
+					pythonPath = "/home/odoo/odoo/.venv/bin/python",
+					venv = ".venv",
+					venvPath = "/home/odoo/odoo",
+				},
+			},
 		},
 	}
 end
