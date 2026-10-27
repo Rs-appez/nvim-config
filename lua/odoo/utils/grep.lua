@@ -1,25 +1,21 @@
-local function grep_odoo()
-    local Snacks = require("snacks")
+local globs = { "*.js", "*.ts", "*.py", "*.xml", "*.css", "*.scss", "*.html" }
 
-    Snacks.picker.grep({
-        glob = {
-            "*.js", "*.ts", "*.py", "*.xml",
-            "*.css", "*.scss", "*.html",
-            "!**/tests/**",
-        },
-    })
+local function grep_odoo_with(extra_glob, opts)
+    local Snacks = require("snacks")
+    local glob = vim.list_extend(vim.deepcopy(globs), { extra_glob })
+
+    Snacks.picker.grep(vim.tbl_extend("force", {
+        glob = glob,
+        regex = false,
+    }, opts or {}))
+end
+
+local function grep_odoo()
+    grep_odoo_with("!**/tests/**")
 end
 
 local function grep_odoo_tests()
-    local Snacks = require("snacks")
-
-    Snacks.picker.grep({
-        glob = {
-            "*.js", "*.ts", "*.py", "*.xml",
-            "*.css", "*.scss", "*.html",
-            "**/tests/**",
-        },
-    })
+    grep_odoo_with("**/tests/**")
 end
 
 vim.keymap.set("n", "<leader>og", grep_odoo, {
