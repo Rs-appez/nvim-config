@@ -7,8 +7,6 @@ return {
 	config = function()
 		require("appez.utils.diagnostics").setup()
 
-		require("odoo.odoo-ls")
-
 		-- Auto-discover and enable all lsp/*.lua configs
 		local lsp_dir = vim.fn.stdpath("config") .. "/after/lsp"
 		local servers = {}

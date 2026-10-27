@@ -1,32 +1,23 @@
-local lspconfig = require("lspconfig")
-local configs = require("lspconfig.configs")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local has_blink, blink = pcall(require, "blink.cmp")
-
-local home = vim.env.HOME or vim.fn.expand("~")
-local server_path = home .. "/.local/share/nvim/odoo/odoo_ls_server"
-
 if has_blink then
 	capabilities = blink.get_lsp_capabilities(capabilities)
 end
 
-if not configs.odoo_ls then
-	configs.odoo_ls = {
-		default_config = {
-			cmd = { server_path },
-			filetypes = { "python", "javascript", "xml" },
-			root_dir = lspconfig.util.root_pattern("odools.toml"),
-			settings = {
-				python = {
-					pythonPath = "/home/odoo/odoo/.venv/bin/python",
-					venv = ".venv",
-					venvPath = "/home/odoo/odoo",
-				},
-			},
-		},
-	}
-end
+local home = vim.env.HOME or vim.fn.expand("~")
 
-lspconfig.odoo_ls.setup({
+vim.lsp.config("odoo_ls", {
+	cmd = { home .. "/.local/share/nvim/odoo/odoo_ls_server" },
+	filetypes = { "python", "javascript", "xml" },
+	root_markers = { "odools.toml" },
 	capabilities = capabilities,
+	settings = {
+		python = {
+			pythonPath = "/home/odoo/odoo/.venv/bin/python",
+			venv = ".venv",
+			venvPath = "/home/odoo/odoo",
+		},
+	},
 })
+
+vim.lsp.enable("odoo_ls")
