@@ -1,27 +1,31 @@
-local globs = { "*.js", "*.ts", "*.py", "*.xml", "*.css", "*.scss", "*.html" }
+local extensions = { "js", "ts", "py", "xml", "css", "scss", "html" }
 
-local function grep_odoo_with(extra_glob, opts)
-    local Snacks = require("snacks")
-    local glob = vim.list_extend(vim.deepcopy(globs), { extra_glob })
+local function build_globs(prefix, exclude)
+    local globs = vim.tbl_map(function(ext)
+        return prefix .. "*." .. ext
+    end, extensions)
 
-    Snacks.picker.grep(vim.tbl_extend("force", {
-        glob = glob,
-        regex = false,
-    }, opts or {}))
+    if exclude then
+        table.insert(globs, exclude)
+    end
+    return globs
 end
 
-local function grep_odoo()
-    grep_odoo_with("!**/tests/**")
+local function grep_odoo(globs, desc)
+    return function()
+        Snacks.picker.grep({
+            glob = globs,
+            regex = false,
+            title = desc,
+        })
+    end
 end
 
-local function grep_odoo_tests()
-    grep_odoo_with("**/tests/**")
+local grep_targets = {
+    { key = "<leader>og", desc = "Grep Odoo Main Files", globs = build_globs("", "!**/tests/**") },
+    { key = "<leader>ot", desc = "Grep Odoo Test Files", globs = build_globs("**/tests/**/") },
+}
+
+for _, target in ipairs(grep_targets) do
+    vim.keymap.set("n", target.key, grep_odoo(target.globs, target.desc), { desc = target.desc })
 end
-
-vim.keymap.set("n", "<leader>og", grep_odoo, {
-    desc = "Grep Odoo Main Files",
-})
-
-vim.keymap.set("n", "<leader>ot", grep_odoo_tests, {
-    desc = "Grep Odoo Test Files",
-})
