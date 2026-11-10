@@ -7,3 +7,4 @@ pcall(function()
 end)
 
 require("appez")
+require("odoo")

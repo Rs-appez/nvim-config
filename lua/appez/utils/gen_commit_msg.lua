@@ -157,16 +157,16 @@ local models = {
 	},
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "gitcommit",
-	callback = function()
-		local hostname = vim.fn.hostname()
-		local machine_models = models[hostname]
-
-		for _, entry in ipairs(machine_models) do
-			vim.keymap.set("n", entry.key, function()
-				generate_commit_message(entry.model)
-			end, { buffer = true, desc = entry.desc })
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "gitcommit",
+-- 	callback = function()
+-- 		local hostname = vim.fn.hostname()
+-- 		local machine_models = models[hostname]
+--
+-- 		for _, entry in ipairs(machine_models) do
+-- 			vim.keymap.set("n", entry.key, function()
+-- 				generate_commit_message(entry.model)
+-- 			end, { buffer = true, desc = entry.desc })
+-- 		end
+-- 	end,
+-- })

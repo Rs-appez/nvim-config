@@ -25,8 +25,8 @@ return {
 	opts = {
 		interactions = {
 			chat = {
-				adapter = is_ollama_running() and "ollama" or "copilot",
-				model = is_ollama_running() and get_default_model() or "gpt-5-mini",
+				adapter = "claude_code",
+				model = "opus",
 			},
 			inline = {
 				keymaps = {
@@ -68,6 +68,16 @@ return {
 				},
 			},
 			acp = {
+				claude_code = function()
+					return require("codecompanion.adapters").extend("claude_code", {
+                        commands = {
+                            default = { "claude_acp_sandboxed" },
+                        },
+						env = {
+							CLAUDE_CODE_OAUTH_TOKEN = "cmd:pass show odoo/Anthropic/claude_code",
+						},
+					})
+				end,
 				opts = {
 					show_presets = false,
 				},

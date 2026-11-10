@@ -18,7 +18,7 @@ return {
 					},
 				},
 				lualine_b = { "branch", "diff" },
-				lualine_c = { "diagnostics", "filename" },
+				lualine_c = { "diagnostics", {"filename", path = 1} },
 
 				lualine_x = {
 					-- copilot model indicator
