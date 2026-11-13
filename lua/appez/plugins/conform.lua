@@ -6,9 +6,24 @@ return {
 		{
 			"<leader>gf",
 			function()
-				require("conform").format({ async = true })
+				require("conform").format({ async = true, lsp_fallback = true })
 			end,
 			desc = "Format buffer",
+		},
+		{
+			"<leader>gf",
+			function()
+				require("conform").format({
+					async = true,
+					range = {
+						start = vim.api.nvim_buf_get_mark(0, "<"),
+						["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+					},
+					lsp_fallback = true,
+				})
+			end,
+			mode = "v",
+			desc = "Format selection",
 		},
 	},
 	opts = {
